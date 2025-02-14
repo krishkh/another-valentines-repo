@@ -42,12 +42,17 @@ const DateSelectionPopup = ({ onClose, onSelect }: DateSelectionPopupProps) => {
     onSelect(dateTitle);
   };
 
+  const handleClose = () => {
+    window.location.href = "https://www.youtube.com/watch?v=e1mOmdykmwI";
+    onClose();
+  };
+
   return (
     <motion.div
       className="fixed inset-0 bg-gradient-to-b from-[#2d0e1b]/95 to-[#3d1c1a]/95 flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      onClick={onClose}
+      onClick={handleClose}
     >
       <motion.div
         className="bg-[#2a2a2a]/95 p-8 rounded-3xl text-center max-w-5xl w-full mx-4 
@@ -105,7 +110,7 @@ const DateSelectionPopup = ({ onClose, onSelect }: DateSelectionPopupProps) => {
               with you and I will be anywhere you want me to be 💝
             </h2>
             <motion.button
-              onClick={onClose}
+              onClick={handleClose}
               className="mt-8 bg-[#f8b4c4] text-[#2a2a2a] px-8 py-3 rounded-full 
                        hover:bg-[#ff9eb5] transition-colors text-xl font-medium"
               whileHover={{ scale: 1.05 }}
