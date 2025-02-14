@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState } from "react";
 
 interface DateOption {
   title: string;
@@ -14,7 +15,7 @@ interface DateSelectionPopupProps {
 
 const dateOptions: DateOption[] = [
   {
-    title: "Movie Date 🎬",
+    title: "Movie Date ��",
     description:
       "Let's watch a romantic movie together and share some popcorn!",
     image: "/movie-date.png",
@@ -34,6 +35,13 @@ const dateOptions: DateOption[] = [
 ];
 
 const DateSelectionPopup = ({ onClose, onSelect }: DateSelectionPopupProps) => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const handleDateSelect = (dateTitle: string) => {
+    setSelectedDate(dateTitle);
+    onSelect(dateTitle);
+  };
+
   return (
     <motion.div
       className="fixed inset-0 bg-gradient-to-b from-[#2d0e1b]/95 to-[#3d1c1a]/95 flex items-center justify-center z-50"
@@ -49,39 +57,64 @@ const DateSelectionPopup = ({ onClose, onSelect }: DateSelectionPopupProps) => {
         transition={{ delay: 0.2, type: "spring", damping: 20 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-4xl mb-8 font-['Segoe_UI'] italic text-white drop-shadow-[0_2px_8px_rgba(248,180,196,0.5)]">
-          Choose Our First Date! 💕
-        </h2>
+        {!selectedDate ? (
+          <>
+            <h2 className="text-4xl mb-8 font-['Segoe_UI'] italic text-white drop-shadow-[0_2px_8px_rgba(248,180,196,0.5)]">
+              Choose Our First Date! 💕
+            </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {dateOptions.map((date, index) => (
-            <motion.div
-              key={date.title}
-              className="bg-[#3a3a3a]/90 rounded-xl p-6 cursor-pointer hover:bg-[#4a4a4a]/90 
-                        transition-colors border-2 border-[#f8b4c4]/30 hover:border-[#f8b4c4]
-                        flex flex-col h-full"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 + 0.3 }}
-              onClick={() => onSelect(date.title)}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              {dateOptions.map((date, index) => (
+                <motion.div
+                  key={date.title}
+                  className="bg-[#3a3a3a]/90 rounded-xl p-6 cursor-pointer hover:bg-[#4a4a4a]/90 
+                            transition-colors border-2 border-[#f8b4c4]/30 hover:border-[#f8b4c4]
+                            flex flex-col h-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                  onClick={() => handleDateSelect(date.title)}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="relative w-full h-40 mb-4">
+                    <Image
+                      src={date.image}
+                      alt={date.title}
+                      fill
+                      className="rounded-lg object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-['Segoe_UI'] italic text-[#f8b4c4] mb-2">
+                    {date.title}
+                  </h3>
+                  <p className="text-white/90 text-base">{date.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="py-12"
+          >
+            <h2 className="text-4xl mb-8 font-['Segoe_UI'] italic text-[#f8b4c4] leading-relaxed">
+              Doesn&apos;t matter what kind of date, all I care about is being
+              with you and I will be anywhere you want me to be 💝
+            </h2>
+            <motion.button
+              onClick={onClose}
+              className="mt-8 bg-[#f8b4c4] text-[#2a2a2a] px-8 py-3 rounded-full 
+                       hover:bg-[#ff9eb5] transition-colors text-xl font-medium"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="relative w-full h-40 mb-4">
-                <Image
-                  src={date.image}
-                  alt={date.title}
-                  fill
-                  className="rounded-lg object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-['Segoe_UI'] italic text-[#f8b4c4] mb-2">
-                {date.title}
-              </h3>
-              <p className="text-white/90 text-base">{date.description}</p>
-            </motion.div>
-          ))}
-        </div>
+              Close ✨
+            </motion.button>
+          </motion.div>
+        )}
       </motion.div>
     </motion.div>
   );
