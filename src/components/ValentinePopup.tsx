@@ -105,7 +105,7 @@ const ValentinePopup = ({ onClose }: ValentinePopupProps) => {
         </h2>
 
         <p className="mb-12 text-[#f8b4c4] text-2xl leading-relaxed font-['Segoe_UI'] italic">
-          I've been wanting to ask you this for a while...
+          I&apos;ve been wanting to ask you this for a while...
           <motion.span
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -127,7 +127,7 @@ const ValentinePopup = ({ onClose }: ValentinePopupProps) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Yes, I'd love to! 💖
+            Yes, I&apos;d love to! 💖
           </motion.button>
         ) : (
           <>

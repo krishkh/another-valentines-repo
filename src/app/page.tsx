@@ -183,7 +183,7 @@ export default function Home() {
               className="mt-1"
             />
             <div>
-              <p>* don't you dare touch</p>
+              <p>* don&apos;t you dare touch</p>
               <p>* that button.</p>
             </div>
           </div>
