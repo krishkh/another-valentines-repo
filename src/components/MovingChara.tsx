@@ -1,41 +1,46 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useAnimationControls } from "framer-motion";
 
-interface MovingCharaProps {
-  direction: "front" | "back" | "left" | "right";
-  character: "frisk" | "chara";
-  isMoving: boolean;
-}
-
-const MovingChara: React.FC<MovingCharaProps> = ({
-  direction,
-  character,
-  isMoving,
-}) => {
+const MovingChara: React.FC = () => {
   const [movingRight, setMovingRight] = useState(true);
   const controls = useAnimationControls();
+  const [initialX, setInitialX] = useState(0);
+
+  useEffect(() => {
+    // Set initial position after component mounts
+    setInitialX(window.innerWidth * 0.2);
+  }, []);
 
   useEffect(() => {
     const updatePosition = () => {
-      const screenWidth = window.innerWidth;
-      const rightBoundary = screenWidth * 0.4; // 80% of screen width
-      const leftBoundary = screenWidth * -0.3; // 20% of screen width
+      if (typeof window !== "undefined") {
+        const screenWidth = window.innerWidth;
+        const rightBoundary = screenWidth * 0.4; // 80% of screen width
+        const leftBoundary = screenWidth * -0.3; // 20% of screen width
 
-      controls.start({
-        x: movingRight ? rightBoundary : leftBoundary,
-        transition: {
-          duration: 5,
-          ease: "linear",
-        },
-      });
+        controls.start({
+          x: movingRight ? rightBoundary : leftBoundary,
+          transition: {
+            duration: 5,
+            ease: "linear",
+          },
+        });
+      }
     };
 
     updatePosition();
 
     // Add window resize listener
-    window.addEventListener("resize", updatePosition);
-    return () => window.removeEventListener("resize", updatePosition);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", updatePosition);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", updatePosition);
+      }
+    };
   }, [movingRight, controls]);
 
   const handleAnimationComplete = () => {
@@ -45,7 +50,7 @@ const MovingChara: React.FC<MovingCharaProps> = ({
   return (
     <motion.div
       className="character"
-      initial={{ x: window.innerWidth * 0.2 }}
+      initial={{ x: initialX }}
       animate={controls}
       onAnimationComplete={handleAnimationComplete}
     >
