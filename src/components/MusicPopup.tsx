@@ -47,10 +47,11 @@ const MusicPopup = () => {
         transition={{ delay: 0.2, type: "spring", damping: 20 }}
       >
         <h2 className="text-5xl mb-8 font-['Segoe_UI'] italic text-white drop-shadow-[0_2px_8px_rgba(248,180,196,0.5)]">
-          Can I ask you a question?
+          who are you? This is a very serious website only for one person.
         </h2>
         <p className="mb-12 text-[#f8b4c4] text-2xl leading-relaxed font-['Segoe_UI'] italic">
-          I really wanna know... please...
+          YOU BETTER NOT BE KIDDING AROUND... GIVE ME YOUR NAME. OR I WILL HACK
+          U
         </p>
         <div className="mb-10">
           <input
