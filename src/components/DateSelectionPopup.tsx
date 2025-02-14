@@ -43,7 +43,7 @@ const DateSelectionPopup = ({ onClose, onSelect }: DateSelectionPopupProps) => {
   };
 
   const handleClose = () => {
-    window.location.href = "https://www.youtube.com/watch?v=e1mOmdykmwI";
+    window.location.href = "https://youtu.be/UDHklYvDkv8";
     onClose();
   };
 
